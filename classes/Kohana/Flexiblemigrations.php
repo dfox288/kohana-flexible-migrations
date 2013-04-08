@@ -154,6 +154,10 @@ class Kohana_Flexiblemigrations
             if (is_null($migration_directory)) {
                 $migration_directory = APPPATH;
             }
+
+            if (!is_dir($migration_directory.$this->_config['path'])) {
+                mkdir($migration_directory.$this->_config['path'], 0770);
+            }
 			$file 		= fopen($migration_directory.$this->_config['path'].$file_name, 'w+');
 			
 			//Opens the template file and replaces the name

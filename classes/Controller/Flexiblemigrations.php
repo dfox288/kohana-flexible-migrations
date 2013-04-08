@@ -55,7 +55,7 @@ class Controller_Flexiblemigrations extends Kohana_Controller_Template {
 	{
 		$this->view = new View('flexiblemigrations/new');
 
-        $modules = array();
+        $modules = array(APPPATH => 'application');
         foreach (Kohana::modules() as $module => $path) {
             $modules[$path] = $module;
         }
