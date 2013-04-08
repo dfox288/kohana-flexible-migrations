@@ -1,0 +1,8 @@
+{
+    "minimum-stability": "dev",
+    "name": "external/migrations",
+    "type": "kohana-module",
+    "description": "A Kohana module for database migrations",
+    "keywords": ["kohana", "migration"],
+    "homepage": "https://github.com/dfox288/kohana-flexible-migrations"
+}
