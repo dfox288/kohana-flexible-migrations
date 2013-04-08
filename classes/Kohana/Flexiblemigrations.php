@@ -128,7 +128,7 @@ class Kohana_Flexiblemigrations
 	 */
 	public function get_migrations()	
 	{
-		$migrations = glob($this->_config['path'].'*'.EXT);
+        $migrations = Kohana::list_files($this->_config['path']);
 		foreach ($migrations as $i => $file)
 		{
 			$name = basename($file, EXT);
@@ -145,21 +145,23 @@ class Kohana_Flexiblemigrations
 	 *
 	 * @return integer completion_code
 	 */
-	public function generate_migration($migration_name)	
+	public function generate_migration($migration_name, $migration_directory=NULL)
 	{
-		try
+        try
 		{
 			//Creates the migration file with the timestamp and the name from params
 			$file_name 	= $this->get_timestamp(). '_' . $migration_name . '.php';
-			$config 	= $this->get_config();
-			$file 		= fopen($config['path'].$file_name, 'w+');
+            if (is_null($migration_directory)) {
+                $migration_directory = APPPATH;
+            }
+			$file 		= fopen($migration_directory.$this->_config['path'].$file_name, 'w+');
 			
 			//Opens the template file and replaces the name
 			$view = new View('migration_template');
 			$view->set_global('migration_name', $migration_name);
 			fwrite($file, $view);
 			fclose($file);
-			chmod($config['path'].$file_name, 0770);
+			chmod($migration_directory.$file_name, 0770);
 			return 0;
 		}
 		catch (Exception $e)
@@ -192,9 +194,17 @@ class Kohana_Flexiblemigrations
 	 */
 	protected function load_migration($version) 
 	{
-		$f = glob($this->_config['path'].$version.'*'. EXT);
+        // Loop through kohanas include paths to find the correct migration
+        foreach (Kohana::include_paths() as $path) {
 
-		if ( count($f) > 1 ) // Only one migration per step is permitted
+            $f = glob($path.$this->_config['path'].$version.'*'. EXT);
+
+            if (count($f) > 0) {
+                break;
+            }
+        }
+
+        if ( count($f) > 1 ) // Only one migration per step is permitted
 			throw new Kohana_Exception('There are repeated migration names');
 
 		if ( count($f) == 0 ) // Migration step not found

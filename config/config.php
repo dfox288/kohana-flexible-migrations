@@ -9,6 +9,6 @@ return array(
 	'web_frontend_route' => 'migrations',
 
 	//Path where migration files are going to be generated
-	'path' => APPPATH . 'migrations/'
+	'path' => 'migrations/'
 
 );

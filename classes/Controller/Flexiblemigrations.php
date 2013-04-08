@@ -54,12 +54,20 @@ class Controller_Flexiblemigrations extends Kohana_Controller_Template {
 	public function action_new() 
 	{
 		$this->view = new View('flexiblemigrations/new');
+
+        $modules = array();
+        foreach (Kohana::modules() as $module => $path) {
+            $modules[$path] = $module;
+        }
+
 		$this->template->view = $this->view;
+        $this->template->view->modules = $modules;
 	}
 
 	public function action_create() 
 	{
 		$migration_name = str_replace(' ','_',$_REQUEST['migration_name']);
+        $migration_directory = str_replace(' ','_',$_REQUEST['migration_directory']);
 		$session = Session::instance();
 		
 		try 
@@ -67,7 +75,7 @@ class Controller_Flexiblemigrations extends Kohana_Controller_Template {
       		if (empty($migration_name)) 
       			throw new Exception("Migration mame must not be empty");
 
-			$this->migrations->generate_migration($migration_name);
+			$this->migrations->generate_migration($migration_name, $migration_directory);
 
 			//Sets a status message
 			$session->set('message', "Migration ".$migration_name." was succefully created. Check migrations folder");
