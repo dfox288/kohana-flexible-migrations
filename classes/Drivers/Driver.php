@@ -19,6 +19,8 @@ abstract class Drivers_Driver
 		'string',
 		'binary',
 		'boolean',
+        'blob',
+        'longblob'
 	);
 	
 	/**

@@ -14,7 +14,7 @@
  * Reworked for Kohana by Jamie Madill
  *
  * @package		Migrations
- * @author		Matías Montes
+ * @author		Matï¿½as Montes
  * @author      Jamie Madill
  */
 
