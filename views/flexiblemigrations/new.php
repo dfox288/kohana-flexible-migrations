@@ -5,7 +5,7 @@
 
 <div>Create New Migration</div>
 
-<form method="post" action="/<?php echo URL::base().Route::get('migrations_create')->uri() ?>">
+<form method="post" action="<?php echo URL::base().Route::get('migrations_create')->uri() ?>">
   <?php echo Form::select('migration_directory', $modules) ?>
   <?php echo  Form::input('migration_name') ?>
   <?php echo  Form::submit('submit','Create Migration') ?>
