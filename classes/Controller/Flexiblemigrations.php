@@ -39,13 +39,19 @@ class Controller_Flexiblemigrations extends Kohana_Controller_Template {
 	public function action_index() 
 	{
 		$migrations=$this->migrations->get_migrations();
-		rsort($migrations);
+
+		$migrations_array = array();
+		foreach ($migrations as $m)
+		{
+			$migrations_array[] = basename($m, EXT);
+		}
+		arsort($migrations_array);
 
 		//Get migrations already runned from the DB
 		$migrations_runned = ORM::factory('Migration')->find_all()->as_array('hash');
 
 		$this->view = new View('flexiblemigrations/index');
-		$this->view->set_global('migrations', $migrations);
+		$this->view->set_global('migrations', $migrations_array);
 		$this->view->set_global('migrations_runned', $migrations_runned);
 
 		$this->template->view = $this->view;
