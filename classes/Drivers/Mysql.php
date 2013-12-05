@@ -57,7 +57,8 @@ class Drivers_Mysql extends Drivers_Driver
 
 	public function drop_table($table_name)
 	{
-		return $this->run_query("DROP TABLE $table_name");
+		$this->run_query("SET foreign_key_checks = 0");
+		return $this->run_query("DROP TABLE IF EXISTS $table_name");
 	}
 
 	public function rename_table($old_name, $new_name)
