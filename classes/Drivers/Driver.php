@@ -16,6 +16,8 @@ abstract class Drivers_Driver
 		'timestamp',
 		'time',
 		'text',
+		'mediumtext',
+		'largetext',
 		'string',
 		'binary',
 		'boolean',
