@@ -135,7 +135,7 @@ class Kohana_Flexiblemigrations
 			if (!preg_match('/^\d{14}_(\w+)$/', $name)) //Check filename format
 				unset($migrations[$i]);
 		}
-		sort($migrations);
+		ksort($migrations);
 		return $migrations;
 	}
 
